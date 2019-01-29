@@ -26,7 +26,7 @@ public class FilePartReader {
         this.toLine = toLine;
     }
 
-    public String read() throws FileNotFoundException,IOException {
+    public String read() throws IOException {
         BufferedReader in = null;
         String s;
         StringBuilder sb = new StringBuilder(); // use a StringBuilder if you are doing lot of string manipulation
@@ -35,24 +35,24 @@ public class FilePartReader {
             sb.append(s + "\n");
         in.close();
         sb.setLength(sb.length() - 1);
-        return sb.toString();
+        return sb.toString().replace("\uFEFF", "");
     }
 
     public String getFilepath() {
         return filePath;
     }
 
-    public String readLines() throws FileNotFoundException,IOException {
+    public String readLines() throws IOException {
         String file = read();
-        String lines[] = file.split("\\r?\\n");
+        String lines[] = file.split("\n");
         String[] selectedLines = Arrays.copyOfRange(lines, fromLine - 1, toLine);
         StringBuilder sb = new StringBuilder();
         for (String line: selectedLines
              ) {
-            sb.append(line + "\n");
+            sb.append(line + " ");
         }
         sb.setLength(sb.length() - 1);
-        return sb.toString();
+        return sb.toString().replace("\uFEFF", "");
     }
 
 

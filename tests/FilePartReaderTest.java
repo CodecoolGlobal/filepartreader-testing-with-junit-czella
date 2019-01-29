@@ -1,7 +1,5 @@
 import com.code.cool.filepartreader.FilePartReader;
-import org.junit.Rule;
 import org.junit.jupiter.api.Test;
-import org.junit.rules.ExpectedException;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,8 +10,6 @@ public class FilePartReaderTest {
 
     private FilePartReader test = new FilePartReader();
 
-    @Rule
-    public final ExpectedException exception = ExpectedException.none();
     @Test
     public void testIsFilePathIsNotNull() {
         assertNotNull(test.getFilepath());
@@ -48,10 +44,10 @@ public class FilePartReaderTest {
     }
 
     @Test
-    public void testIsReadReturnsTestString() throws FileNotFoundException,IOException {
+    public void testIsReadReturnsTestString() throws IOException {
         test.setup("static/test.txt", 1, 1);
         String result = test.read();
-        assertEquals("\uFEFFThis is a test\n" +
+        assertEquals("This is a test\n" +
                 "second line\n" +
                 "third line\n" +
                 "fourth line\n" +
@@ -67,10 +63,9 @@ public class FilePartReaderTest {
     }
 
     @Test
-    public void testIsReadLinesReturnsTestStringPart() throws FileNotFoundException,IOException {
+    public void testIsReadLinesReturnsTestStringPart() throws IOException {
         test.setup("static/test.txt", 1, 2);
         String result = test.readLines();
-        assertEquals("\uFEFFThis is a test\n" +
-                "second line", result);
+        assertEquals("This is a test second line", result);
     }
 }
